@@ -1,3 +1,10 @@
 # Project exclude paths
 /out/
 /target/
+/report
+OS-HW1.iml
+submit.zip
+tester.zip
+tester_config.json
+valid_files
+.idea
