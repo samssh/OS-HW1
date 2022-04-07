@@ -3,7 +3,6 @@ package os.hw1.testers;
 import org.junit.Test;
 import os.hw1.ProcessRunner;
 
-import java.io.IOException;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
 

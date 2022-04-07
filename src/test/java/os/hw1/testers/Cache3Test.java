@@ -7,7 +7,7 @@ import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
 
 import static org.junit.Assert.assertEquals;
-import static os.hw1.Config.*;
+import static os.hw1.Config.WAIT_P3;
 
 public class Cache3Test extends BaseTester {
     @Override

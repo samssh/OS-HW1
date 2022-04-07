@@ -7,8 +7,6 @@ import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
 
 import static org.junit.Assert.assertEquals;
-import static os.hw1.Config.WAIT_P1;
-import static os.hw1.Config.WAIT_P2;
 
 public class MultiTimeKillTest extends BaseTester {
     @Override
@@ -17,7 +15,7 @@ public class MultiTimeKillTest extends BaseTester {
     }
 
     @Test(timeout = 10000)
-    public void workerWeightsTest() throws InterruptedException, ExecutionException {
+    public void multiTimeKillTest() throws InterruptedException, ExecutionException {
         Future<Response> responseFuture1 = executorService.submit(() -> sendRequest(10, 1));
         Thread.sleep(400);
         for (int i = 0; i < 3; i++) {

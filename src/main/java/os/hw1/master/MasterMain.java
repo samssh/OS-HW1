@@ -1,13 +1,10 @@
 package os.hw1.master;
 
-import java.io.IOException;
-import java.net.Socket;
 import java.util.Scanner;
 
 public class MasterMain {
 
-    public static void main(String[] args) throws IOException {
-//        Socket socket = new Socket("google.com", 80);
+    public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         int port = scanner.nextInt();
         int workerCount = scanner.nextInt();

@@ -20,7 +20,7 @@ public class WorkerKillTest extends BaseTester {
     }
 
     @Test(timeout = 10000)
-    public void checkPIDTest() throws InterruptedException, IOException, ExecutionException {
+    public void workerKillTest() throws InterruptedException, IOException, ExecutionException {
         Future<Response> responseFuture1 = executorService.submit(() -> sendRequest(10, 2));
         Future<Response> responseFuture2 = executorService.submit(() -> sendRequest(13, 2));
         Thread.sleep(500);
