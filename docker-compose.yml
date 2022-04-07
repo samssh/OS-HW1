@@ -1,0 +1,17 @@
+version: "3"
+
+services:
+  java-test:
+    image: java-test-runner
+    networks:
+      - no-internet
+    volumes:
+      - "./a:/software/src/main/java"
+      - "./src/test/java:/software/src/test/java"
+      - "./report:/software/target/surefire-reports"
+    entrypoint: sleep infinity
+
+networks:
+  no-internet:
+    driver: bridge
+    internal: true
