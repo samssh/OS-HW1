@@ -6,10 +6,9 @@ services:
     networks:
       - no-internet
     volumes:
-      - "./a:/software/src/main/java"
+      - "./src/main/java:/software/src/main/java"
       - "./src/test/java:/software/src/test/java"
       - "./report:/software/target/surefire-reports"
-    entrypoint: sleep infinity
 
 networks:
   no-internet:

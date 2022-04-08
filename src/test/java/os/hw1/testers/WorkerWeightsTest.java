@@ -18,18 +18,14 @@ public class WorkerWeightsTest extends BaseTester {
 
     @Test(timeout = 10000)
     public void workerWeightsTest() throws InterruptedException, ExecutionException {
-        Future<Response> responseFuture1 = executorService.submit(() -> sendRequest(10, 1));
-        Future<Response> responseFuture2 = executorService.submit(() -> sendRequest(13, 1));
+        Future<Response> responseFuture1 = executorService.submit(() -> sendRequest(10, 1, 2, 1));
+        Future<Response> responseFuture2 = executorService.submit(() -> sendRequest(13, 2, 1, 2));
         Thread.sleep(500);
-        Future<Response> responseFuture3 = executorService.submit(() -> sendRequest(17, 2));
         Response result1 = responseFuture1.get();
-        assertTime(result1.time, WAIT_P1);
-        assertEquals(result1.output, 9);
+        assertTime(result1.time, 2 * WAIT_P1 + WAIT_P2);
+        assertEquals(result1.output, 3);
         Response result2 = responseFuture2.get();
-        assertTime(result2.time, WAIT_P1);
-        assertEquals(result2.output, 12);
-        Response result3 = responseFuture3.get();
-        assertTime(result3.time, WAIT_P1 + WAIT_P2 - 500);
-        assertEquals(result3.output, 3);
+        assertTime(result2.time, WAIT_P1 + 2 * WAIT_P2);
+        assertEquals(result2.output, 0);
     }
 }

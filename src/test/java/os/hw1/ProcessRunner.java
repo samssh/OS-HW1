@@ -36,7 +36,7 @@ public class ProcessRunner {
         return this;
     }
 
-    static void transfer(OutputStream outputStream, InputStream inputStream) {
+    private void transfer(OutputStream outputStream, InputStream inputStream) {
         Scanner scanner = new Scanner(inputStream);
         PrintStream printStream = new PrintStream(outputStream);
         while (scanner.hasNextLine()) {
@@ -46,6 +46,10 @@ public class ProcessRunner {
     }
 
     public RunningProcess runProcess() throws Exception {
+        return runProcess(false);
+    }
+
+    public RunningProcess runProcess(boolean waitForCache) throws Exception {
         Process process = new ProcessBuilder(
                 commonArgs[0], commonArgs[1], commonArgs[2], "os.hw1.master.MasterMain"
         ).start();
@@ -62,7 +66,8 @@ public class ProcessRunner {
         Scanner scanner = new Scanner(process.getInputStream());
         Pattern pattern = Pattern.compile("(?<componentName>master|cache|worker)(\\s+(?<workerNum>\\d+))?\\s+start\\s+(?<pid>\\d+)\\s+(?<port>\\d+)");
         int i = 0;
-        while (i < workerCount + 2) {
+        int processCount = waitForCache ? workerCount + 2 : workerCount + 1;
+        while (i < processCount) {
             String line = scanner.nextLine();
             System.out.println(line);
             Matcher matcher = pattern.matcher(line);
@@ -75,6 +80,9 @@ public class ProcessRunner {
                         result.setMaster(ProcessHandle.of(pid).orElseThrow());
                         break;
                     case "cache":
+                        if (!waitForCache) {
+                            i--;
+                        }
                         result.setCache(ProcessHandle.of(pid).orElseThrow());
                         break;
                     case "worker":
@@ -85,10 +93,11 @@ public class ProcessRunner {
                 i++;
             }
         }
-//        new Thread(() -> transfer(System.out, process.getInputStream())).start();
+
+        if (!waitForCache) {
+            Thread.sleep(500);
+        }
         new Thread(() -> transfer(System.err, process.getErrorStream())).start();
         return result;
     }
-
-
 }

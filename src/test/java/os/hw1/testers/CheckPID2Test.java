@@ -1,7 +1,6 @@
 package os.hw1.testers;
 
 import org.junit.Test;
-import os.hw1.ProcessRunner;
 
 import java.io.IOException;
 import java.util.List;
@@ -14,18 +13,15 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static os.hw1.Config.WAIT_P2;
 
-public class CheckPIDTest extends BaseTester {
-    @Override
-    public void setUpProcess() throws Exception {
-        runningProcess = new ProcessRunner().runProcess(true);
-    }
-
+public class CheckPID2Test extends BaseTester {
     @Test(timeout = 10000)
-    public void checkPIDTest() throws InterruptedException, IOException, ExecutionException {
+    public void checkPID2Test() throws InterruptedException, IOException, ExecutionException {
         assertTrue(ProcessHandle.current().children().anyMatch(processHandle -> runningProcess.getMaster().equals(processHandle)));
         List<ProcessHandle> materChildren = runningProcess.getMaster().children().collect(Collectors.toList());
-        assertEquals(materChildren.size(), runningProcess.getWorkers().length + 1);
-        assertTrue(materChildren.contains(runningProcess.getCache()));
+        assertTrue(
+                materChildren.size() == runningProcess.getWorkers().length + 1 ||
+                        materChildren.size() == runningProcess.getWorkers().length
+        );
         for (ProcessHandle workerProcess : runningProcess.getWorkers()) {
             assertTrue(materChildren.contains(workerProcess));
         }
@@ -50,10 +46,10 @@ public class CheckPIDTest extends BaseTester {
                 );
             }
         }
-        BaseTester.Response result1 = responseFuture1.get();
+        Response result1 = responseFuture1.get();
         assertTime(result1.time, WAIT_P2);
         assertEquals(result1.output, 0);
-        BaseTester.Response result2 = responseFuture2.get();
+        Response result2 = responseFuture2.get();
         assertTime(result2.time, WAIT_P2);
         assertEquals(result2.output, 1);
     }
