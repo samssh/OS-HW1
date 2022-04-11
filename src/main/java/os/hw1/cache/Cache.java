@@ -105,7 +105,7 @@ public class Cache {
             System.exit(1);
         }
         int port = Integer.parseInt(args[0]);
-        int programCount = Integer.parseInt(args[0]);
+        int programCount = Integer.parseInt(args[1]);
         Cache cache = new Cache(port, programCount);
         cache.start();
     }

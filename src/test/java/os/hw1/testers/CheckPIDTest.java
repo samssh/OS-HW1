@@ -3,10 +3,8 @@ package os.hw1.testers;
 import org.junit.Test;
 import os.hw1.ProcessRunner;
 
-import java.io.IOException;
 import java.util.List;
 import java.util.Scanner;
-import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
 import java.util.stream.Collectors;
 
@@ -17,11 +15,11 @@ import static os.hw1.Config.WAIT_P2;
 public class CheckPIDTest extends BaseTester {
     @Override
     public void setUpProcess() throws Exception {
-        runningProcess = new ProcessRunner().runProcess(true);
     }
 
     @Test(timeout = 10000)
-    public void checkPIDTest() throws InterruptedException, IOException, ExecutionException {
+    public void checkPIDTest() throws Exception {
+        runningProcess = new ProcessRunner().runProcess(true);
         assertTrue(ProcessHandle.current().children().anyMatch(processHandle -> runningProcess.getMaster().equals(processHandle)));
         List<ProcessHandle> materChildren = runningProcess.getMaster().children().collect(Collectors.toList());
         assertEquals(materChildren.size(), runningProcess.getWorkers().length + 1);
