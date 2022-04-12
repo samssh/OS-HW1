@@ -7,7 +7,7 @@ public class Config {
     public static final int WAIT_P1 = 1000;
     public static final int WAIT_P2 = 2000;
     public static final int WAIT_P3 = 1500;
-    public static final long SAFA_MARGIN = 800;
+    public static final long SAFA_MARGIN = 900;
     public static final String JAVA_PATH = getJavaPath();
     public static final String CLASS_PATH = getClassPath();
 

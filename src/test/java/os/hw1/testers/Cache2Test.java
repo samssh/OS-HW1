@@ -7,8 +7,7 @@ import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
 
 import static org.junit.Assert.assertEquals;
-import static os.hw1.Config.WAIT_P1;
-import static os.hw1.Config.WAIT_P2;
+import static os.hw1.Config.*;
 
 public class Cache2Test extends BaseTester {
     @Override
@@ -31,5 +30,9 @@ public class Cache2Test extends BaseTester {
         Response result3 = r3.get();
         assertTime(result3.time, 0);
         assertEquals(result3.output, 50 - 1);
+        Future<Response> r1ResponseFuture = executorService.submit(() -> sendRequest(50, 3, 3, 3));
+        Response result1Response = r1ResponseFuture.get();
+        assertTime(result1Response.time, WAIT_P3);
+        assertEquals(result1Response.output, 50);
     }
 }
